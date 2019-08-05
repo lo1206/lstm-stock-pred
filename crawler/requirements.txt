@@ -1,0 +1,7 @@
+pandas-datareader
+psycopg2-binary
+humanize==0.5.1
+yfinance
+interruptingcow==0.8
+proxyscrape==0.2.1
+torrequest

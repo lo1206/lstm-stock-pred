@@ -1,0 +1,19 @@
+version: '3'
+services:
+  analysis:
+    image: 550099614447.dkr.ecr.us-west-2.amazonaws.com/lstm-stock-prediction-analysis:latest
+    build:
+      context: .
+      dockerfile: ./analysis/Dockerfile
+    ports:
+      - "5000:5000"
+      - "8888:8888"
+    volumes:
+      - ./analysis/notebook:/app/notebook
+  crawler:
+    image: 550099614447.dkr.ecr.us-west-2.amazonaws.com/lstm-stock-pred-crawler:latest
+    build:
+      context: .
+      dockerfile: ./crawler/Dockerfile
+    ports:
+      - "8000:8888"

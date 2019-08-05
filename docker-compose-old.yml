@@ -1,0 +1,36 @@
+version: '3'
+services:
+  analysis:
+    build:
+      context: .
+      dockerfile: ./analysis/Dockerfile
+    ports:
+      - "5000:5000"
+      - "8888:8888"
+    volumes:
+      - ./analysis/notebook:/app/notebook
+    depends_on:
+      - db
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - stockapp-database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "hunter2"
+      POSTGRES_DB: "stock"
+  crawler:
+    build:
+      context: .
+      dockerfile: ./crawler/Dockerfile
+    ports:
+      - "8000:8888"
+    volumes:
+      - ./crawler/notebook:/app/notebook
+    depends_on:
+      - db
+volumes:
+  stockapp-database:
+    external: true

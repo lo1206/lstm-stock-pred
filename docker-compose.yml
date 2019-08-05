@@ -1,0 +1,8 @@
+version: '3'
+services:
+  analysis:
+    image: 550099614447.dkr.ecr.us-west-2.amazonaws.com/lstm-stock-prediction-analysis:latest
+    ports:
+      - "5000:5000"
+  crawler:
+    image: 550099614447.dkr.ecr.us-west-2.amazonaws.com/lstm-stock-pred-crawler:latest
