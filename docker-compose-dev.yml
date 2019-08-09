@@ -17,3 +17,5 @@ services:
       dockerfile: ./crawler/Dockerfile
     ports:
       - "8000:8888"
+    volumes:
+      - ./crawler/notebook:/app/notebook

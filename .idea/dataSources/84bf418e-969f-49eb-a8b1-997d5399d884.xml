@@ -9,7 +9,7 @@
       <Comment>default administrative connection database</Comment>
       <StateNumber>592</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>634</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1326</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
       <Relations>sequence|table|16404|16406|1
@@ -137,7 +137,7 @@ search_path=pg_catalog, public</Config>
       <Comment>standard public schema</Comment>
       <StateNumber>594</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>636</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1326</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>

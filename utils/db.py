@@ -6,15 +6,12 @@ taskid = '{date:%Y%m%d-%H%M%S}'.format(date=datetime.now())
 
 def get_db():
 
-    #conn = psycopg2.connect(dbname='stock',
-    #                       user='user',
-    #                        password='hunter2',
-    #                       host='db')
-
     conn = psycopg2.connect(dbname='postgres',
                             user='postgres',
                             password='D80gGEiYQ6JO0haClJJt',
                             host='database-1.cmmlivx2dkqn.us-west-2.rds.amazonaws.com')
+
+
     return conn
 
 
@@ -121,13 +118,13 @@ def add_stock_price(stock_prices):
     db.close()
 
 
-def delete_stock_price(stockcode):
+def delete_stock_price(stock, start_date, end_date):
     sql = """
-            DELETE FROM stock_price WHERE stockcode = %s ;
+            DELETE FROM stock_price WHERE stockcode = %s and date>=%s and date<=%s;
           """
     db = get_db()
     cur = db.cursor()
-    cur.execute(sql, (stockcode,))
+    cur.execute(sql, (stock,start_date, end_date))
     db.commit()
     cur.close()
     db.close()

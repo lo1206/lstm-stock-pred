@@ -6,7 +6,7 @@ import yfinance as yf
 import pandas as pd
 import time
 from itertools import cycle
-from datetime import datetime
+from datetime import datetime, timedelta
 from interruptingcow import timeout
 sys.path.append('./utils')
 import db
@@ -50,8 +50,8 @@ def update_stockprice():
     stocks = df_stock_master[df_stock_master.industryclassification == '銀行']['stockcode'].tolist()
 
     # Select Time period
-    start = datetime(2018, 1, 1)
-    end = datetime.today()
+    start_date = (datetime.today() - timedelta(days=5))
+    end_date = datetime.today()
 
     # Create Empty Stock Price Table
     col_names = ['Stock Code', 'Date', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
@@ -71,7 +71,7 @@ def update_stockprice():
 
                 # Download within 5 seconds
                 with timeout(10, exception=RuntimeError):
-                    data = yf.download(tickers=stock, start=start, end=end, proxy=proxy)
+                    data = yf.download(tickers=stock, start=start_date, end=end_date, proxy=proxy)
                     isdownloaded = True
             except Exception as e:
                 print("Proxy Error")
@@ -89,8 +89,9 @@ def update_stockprice():
 
             ################## Insert into database ###################
             try:
+
                 # Delete original stock price data
-                db.delete_stock_price(stock)
+                db.delete_stock_price(stock, start_date, end_date)
                 print('finished delete stock:' + stock)
 
                 # Insert stock price data
@@ -116,10 +117,10 @@ def update_stockprice():
 
 
 if __name__ == '__main__':
-    run_time = datetime.now()
+    run_time = datetime(1900, 1, 1)
     while True:
         print('time diff:' ,(datetime.now() - run_time).seconds)
-        if (datetime.now() - run_time).seconds > 10000:
+        if (datetime.now() - run_time).seconds > 28800:
             run_time = datetime.now()
             print('update')
             try:

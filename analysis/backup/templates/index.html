@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <title>Deep Learning LSTM HK Stock Prediction</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bootstrap.min.css')}}">
+</head>
+<body>
+    <!---------------------------- Nav bar ------------------------>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="/">
+        <img src="static\logo2.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        Long-Short Term Memory Hong Kong Stock Prediction
+      </a>
+    </nav>
+    <!------------------------------- Title Card -------------------------->
+    <div class="card">
+        <img src="static\ai.png" class="card-img-top" >
+      <div class="card-body">
+        <h5 class="card-title">LSTM Stock Prediction Model</h5>
+        <p class="card-text">This model is constructed by a 3-layer LSTM neural network, and was trained on 2018-2019 HK stock market data.</p>
+        <p class="card-text"><small class="text-muted">Developed by J. Lo</small></p>
+      </div>
+
+    </div>
+        <!------------------------------- Input Stock -------------------------->
+
+    <div class="container">
+
+              <form class="form-inline" action="/" method="post">
+                      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Pick a stock</label>
+                      <select class="custom-select my-1 mr-sm-2" id="stock" name="stock">
+                          {% for stk in stocks %}
+                            <option value={{stk}}>{{stk}}</option>
+                          {% endfor %}
+                      </select>
+                      <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Predict</button>
+                </form>
+
+    </div>
+
+        {% if plot_url|length > 0 %}
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Stock Prediction Statistics</h5>
+                <p class="card-text">Stock Movement Prediction: {{percent_chg}}</p>
+                  <p class="card-text">Target Price: {{target_price}}</p>
+                <p class="card-text"><small class="text-muted">Disclaimer: The result is for learning purpose only.</small></p>
+              </div>
+              <img src="data:image/png;base64, {{plot_url}}" class="card-img-top" alt="...">
+            </div>
+
+        {% else %}
+
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">Stock</th>
+                      <th scope="col">Latest Update</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for update in stocks_latest_update %}
+                        <tr>
+                               <TD class="c1"><SPAN>{{update[0]}}</SPAN></TD>
+                               <TD class="c2"><SPAN>  {{update[1]}}</SPAN></TD>
+                        </tr>
+                    {% endfor %}
+
+                  </tbody>
+                </table>
+         {% endif %}
+
+
+
+
+
+</body>
+</html>
